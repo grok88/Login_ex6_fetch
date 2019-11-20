@@ -8,7 +8,10 @@ class BaseGallery{
 			selectSort : document.querySelector('#type-selector'),
 			count : 0
 		};
-		this.dataArr = this.transform();
+
+		this.dataArr;
+		this.transform();
+		
 	}
 	
 	getArr(node){
@@ -52,9 +55,14 @@ class BaseGallery{
 	}
 
 	transform (){
-		let newArr = this.getArr(data);
-		let result = this.editArr(newArr);	
-		return result;
+		
+		let data =  this.getData();
+		data.then( users => {
+			let newArr = this.getArr(users);
+			let result = this.editArr(newArr);
+			this.dataArr = result;
+
+		});
 	}
 
 	// Сортирует нашу галерею
@@ -96,7 +104,15 @@ class BaseGallery{
 		let target = e.target.value;
 		target && this.sort(target);
 	}
-	
+
+	// Получим массив данных с нашего мини сервера
+	async getData(){
+		let response = await fetch('http://localhost:3000/cars');
+		let users = await response.json();
+		
+		return users;
+	}
+
 	init(){
         if (this.DOMElems.count  + 1 === this.dataArr.length) {
             this.DOMElems.btn.style.backgroundColor = 'red';
@@ -115,7 +131,6 @@ class BaseGallery{
 
 class ExtendedGallery extends BaseGallery {
 	constructor(){
-		// BaseGallery.apply(this);
 		super();
 		this.property = {};
 	}
@@ -126,6 +141,7 @@ class ExtendedGallery extends BaseGallery {
 		if (this.DOMElems.count !== this.dataArr.length + 1) {
 			
 			let arr = this.dataArr;
+			console.log(arr);
 			func &&  (arr = func(arr));
 
 			arr.forEach((elem, index) => {
