@@ -150,11 +150,20 @@ class Validator{
 			return false;
 		}		
 	}
+	async getUserLogin(){
+		let response = await fetch('http://127.0.0.1:3000/user');
+		let data = await response.json();
+		return data;
+	}
 
 	//setLogAndPass 
-	setLogAndPass(database){
-		let res = JSON.stringify(database);
-		localStorage.setItem('checkUser',res);
+	setLogAndPass(){
+		let userLogin = this.getUserLogin();
+		userLogin.then(data => {
+			let res = JSON.stringify(data);
+			console.log(res);
+			localStorage.setItem('checkUser',res);
+		});
 	}
 
 	// save login and pass to local storage

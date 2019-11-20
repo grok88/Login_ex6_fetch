@@ -55,13 +55,11 @@ class BaseGallery{
 	}
 
 	transform (){
-		
 		let data =  this.getData();
 		data.then( users => {
 			let newArr = this.getArr(users);
 			let result = this.editArr(newArr);
 			this.dataArr = result;
-
 		});
 	}
 
@@ -141,7 +139,7 @@ class ExtendedGallery extends BaseGallery {
 		if (this.DOMElems.count !== this.dataArr.length + 1) {
 			
 			let arr = this.dataArr;
-			console.log(arr);
+
 			func &&  (arr = func(arr));
 
 			arr.forEach((elem, index) => {

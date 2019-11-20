@@ -18,11 +18,12 @@ class LoginForm {
 		this.galleryLink = document.querySelector('.gallery-link');
 		this.exit = document.querySelector('.exit-link');
 
+
 		this.validateUserData();
 	}
 	
 	validateUserData (){
-		this.validator.setLogAndPass(database);
+		this.validator.setLogAndPass();
 		this.validator.initial();
 
 		this.btnInput.addEventListener('click', this.btnSubmit.bind(this));
